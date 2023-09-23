@@ -53,7 +53,12 @@ function DesktopNav({ session, providers }) {
         <div>
           {providers &&
             Object.values(providers).map((provider) => (
-              <Button key={provider.name} onClick={() => signIn(provider.id)} text={`Sign in with ${provider.name}`} />
+              <Button 
+              key={provider.name} 
+              onClick={() => signIn(provider.id)} 
+              text={`Sign in with ${provider.name}`} 
+              className={'outline_btn'}
+              />
             ))}
         </div>
       )}
@@ -68,7 +73,7 @@ function MobileNav({ session, providers, toggleDropdown, setToggleDropdown }) {
       {session?.user ? (
         <div className='flex'>
           <Image
-            src={Logo}
+            src={session?.user?.image}
             alt='profile'
             width={30}
             height={30}
@@ -87,7 +92,7 @@ function MobileNav({ session, providers, toggleDropdown, setToggleDropdown }) {
                   Create Prompt
                 </Link>
 
-                <button type='button' className='outline_btn' onClick={() => { }}>
+                <button type='button' className='outline_btn' onClick={() => signOut()}>
                   Logout
                 </button>
               </div>
@@ -98,7 +103,12 @@ function MobileNav({ session, providers, toggleDropdown, setToggleDropdown }) {
         <div>
           {providers &&
             Object.values(providers).map((provider) => (
-              <Button key={provider.name} onClick={() => signIn(provider.id)} text={`Sign in with ${provider.name}`} />
+              <Button 
+              key={provider.name} 
+              onClick={() => signIn(provider.id)} 
+              text={`Sign in with ${provider.name}`} 
+              className={'outline_btn'}
+              />
             ))}
         </div>
       )}
