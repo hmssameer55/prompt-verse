@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 const PromptCardList = ({ data, handleTagClick, handleProfileClick }) => {
   return (
     <div className="mt-12 prompt_layout">
-      {data.map((post) => (
+      {data?.map((post) => (
         <PromptCard
           key={post._id}
           post={post}
@@ -46,7 +46,7 @@ export default function Feed() {
 
         let searchTextInLowerCase = searchText.toLowerCase();
 
-        const filteredPosts = allPosts.filter((post) => {
+        const filteredPosts = allPosts?.filter((post) => {
           return (
             post.prompt.toLowerCase().includes(searchTextInLowerCase) ||
             post.tag.toLowerCase().includes(searchTextInLowerCase) ||
