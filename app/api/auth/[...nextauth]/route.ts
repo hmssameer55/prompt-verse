@@ -3,7 +3,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import { connectToDatabase } from '@utils/database'
 import User from '@models/user'
 
- export const Options = {
+const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -17,7 +17,7 @@ import User from '@models/user'
       }
     })
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: 'secret',
   callbacks: {
     async signIn ({ profile }) {
       try {
@@ -42,8 +42,6 @@ import User from '@models/user'
       return session
     }
   }
-}
-
-const handler = NextAuth(Options)
+})
 
 export { handler as GET, handler as POST }

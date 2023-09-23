@@ -34,8 +34,8 @@ export default function Feed() {
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch('/api/prompt');
-      const data = await response.json();
-      setAllPosts(data);
+      const posts = await response.json();
+      setAllPosts(posts);
     };
     fetchPosts();
   }, []);
