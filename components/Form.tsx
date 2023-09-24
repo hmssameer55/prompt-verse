@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { FormProps } from "@interface/types";
 
-export default function Form ({ type, post, setPost, submitting, handleSubmit })  {
+export default function Form ({ type, post, setPost, submitting, handleSubmit }: FormProps) {
 
   return (
     <section className='w-full max-w-full flex-start flex-col'>

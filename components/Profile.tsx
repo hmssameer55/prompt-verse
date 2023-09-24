@@ -1,9 +1,8 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PromptCard from './PromptCard';
+import { ProfileProps,Post } from '@interface/types';
 
-export default function Profile(props) {
+export default function Profile(props: ProfileProps) {
   const { name, desc, data, handleEdit, handleDelete } = props;
 
   return (
@@ -15,7 +14,7 @@ export default function Profile(props) {
 
       <div className="mt-10 prompt_layout">
         {data.length > 0 ? (
-          data.map((post) => (
+          data.map((post : Post) => (
             <PromptCard
               key={post._id}
               post={post}

@@ -5,9 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Logo from '@public/assets/images/logo.svg';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
+import { MobileNavProps } from '@interface/types';
+
+interface ButtonProps {
+  onClick: () => void;
+  text: string;
+  className: string;
+}
 
 // Common Button component
-function Button({ onClick, text, className }) {
+function Button({ onClick, text, className }: ButtonProps) {
   return (
     <button type='button' onClick={onClick} className={className}>
       {text}
@@ -28,7 +35,7 @@ function NavbarBrand() {
 }
 
 // Desktop navigation component
-function DesktopNav({ session, providers }) {
+function DesktopNav({ session, providers }: { session: any; providers: any }) {
   return (
     <div className='hidden sm:flex gap-4'>
       {session?.user ? (
@@ -66,8 +73,9 @@ function DesktopNav({ session, providers }) {
   );
 }
 
+
 // Mobile navigation component
-function MobileNav({ session, providers, toggleDropdown, setToggleDropdown }) {
+function MobileNav({ session, providers, toggleDropdown, setToggleDropdown }: MobileNavProps) {
   return (
     <div className='flex sm:hidden relative'>
       {session?.user ? (
@@ -119,7 +127,7 @@ function MobileNav({ session, providers, toggleDropdown, setToggleDropdown }) {
 export default function Nav() {
   const { data: session } = useSession();
   const [providers, setProviders] = useState({});
-  const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
   useEffect(() => {
     const setProviderFunc = async () => {

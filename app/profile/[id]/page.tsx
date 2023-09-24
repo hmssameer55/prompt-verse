@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Profile from '@components/Profile';
+import { Post } from '@interface/types';
 
-export default function OthersProfile({ params }) {
-  const [posts, setPosts] = useState([]);
+
+export default function OthersProfile({ params } : { params: { id: string } }) {
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchUserPosts = async () => {

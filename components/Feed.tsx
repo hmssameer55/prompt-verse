@@ -4,8 +4,15 @@ import { useState, useEffect } from 'react';
 import PromptCard from '@components/PromptCard';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { Post } from '@interface/types';
 
-const PromptCardList = ({ data, handleTagClick, handleProfileClick }) => {
+interface PromptCardListProps {
+  data: Post[];
+  handleTagClick: (tag: string) => void;
+  handleProfileClick: (authorId: string) => void;
+}
+
+const PromptCardList = ({ data, handleTagClick, handleProfileClick }:PromptCardListProps) => {
   return (
     <div className="mt-12 prompt_layout">
       {data?.map((post) => (
@@ -21,15 +28,16 @@ const PromptCardList = ({ data, handleTagClick, handleProfileClick }) => {
 };
 
 export default function Feed() {
-  const [allPosts, setAllPosts] = useState([]);
 
   const { data: session } = useSession();
   const router = useRouter();
 
-  // Search states
-  const [searchText, setSearchText] = useState('');
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
 
-  const [searchedResults, setSearchedResults] = useState([]);
+  // Search states
+  const [searchText, setSearchText] = useState<string>('');
+
+  const [searchedResults, setSearchedResults] = useState<Post[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -49,7 +57,7 @@ export default function Feed() {
     const findResults = () => {
       if (searchText.length > 0) {
 
-        let searchTextInLowerCase = searchText.toLowerCase();
+        let searchTextInLowerCase:string = searchText.toLowerCase();
 
         const filteredPosts = allPosts?.filter((post) => {
           return (
@@ -69,15 +77,15 @@ export default function Feed() {
     return () => clearTimeout(clearTimer);
   }, [searchText]);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
-  const handleTagClick = (tag) => {
+  const handleTagClick = (tag: string) => {
     setSearchText(tag);
   };
 
-  const handleProfileClick = (authorId) => {
+  const handleProfileClick = (authorId: string) => {
     if (authorId === session?.user?.id) {
       router.push('/profile');
     } else {

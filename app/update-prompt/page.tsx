@@ -1,71 +1,71 @@
-'use client'
+'use client';
 
-import React, { useState, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import Form from '@components/Form'
+import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Form from '@components/Form';
 
-export default function UpdatePrompt () {
-    const router = useRouter()
-  const searchParams = useSearchParams()
-  const id = searchParams.get('id')
+export default function UpdatePrompt() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
 
   const [post, setPost] = useState({
     prompt: '',
-    tag: ''
-  })
+    tag: '',
+  });
 
-  const [isTagsValid, setIsTagsValid] = useState(false)
+  const [isTagsValid, setIsTagsValid] = useState<boolean>(false);
 
-  const [submitting, setIsSubmitting] = useState(false)
+  const [submitting, setIsSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPost = async () => {
-      const response = await fetch(`/api/prompt/${id}`)
-      const data = await response.json()
+      const response = await fetch(`/api/prompt/${id}`);
+      const data = await response.json();
       setPost({
         prompt: data.prompt,
-        tag: data.tag
-      })
-    }
-    if (id) fetchPost()
-  }, [id])
+        tag: data.tag,
+      });
+    };
+    if (id) fetchPost();
+  }, [id]);
 
   useEffect(() => {
-    const tags = post.tag.split(',')
-    const valid = tags.every(tag => tag.trim().startsWith('#'))
-    setIsTagsValid(valid)
-  }, [post.tag])
+    const tags = post.tag.split(',');
+    const valid = tags.every((tag) => tag.trim().startsWith('#'));
+    setIsTagsValid(valid);
+  }, [post.tag]);
 
-  const updatePrompt = async e => {
-    e.preventDefault()
+  const updatePrompt = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (!isTagsValid) {
-      alert('Please format your tags correctly')
-      return
+      alert('Please format your tags correctly');
+      return;
     }
 
-    if(!id) return
+    if (!id) return;
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     try {
       const res = await fetch(`/api/prompt/${id}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(post)
-      })
+        body: JSON.stringify(post),
+      });
 
       if (res.ok) {
-        router.push('/profile')
+        router.push('/profile');
       }
     } catch (error) {
-      console.error(error)
-      alert('Something went wrong')
+      console.error(error);
+      alert('Something went wrong');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <Form
@@ -75,5 +75,5 @@ export default function UpdatePrompt () {
       submitting={submitting}
       handleSubmit={updatePrompt}
     />
-  )
+  );
 }
